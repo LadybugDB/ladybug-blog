@@ -1,0 +1,20 @@
+{
+  "main": [
+    {
+      "name": "Blog",
+      "url": "/"
+    },
+    {
+      "name": "Docs",
+      "url": "//docs.ladybugdb.com"
+    },
+    {
+      "name": "Tags",
+      "url": "/tags"
+    },
+    {
+      "name": "Categories",
+      "url": "/categories"
+    }
+  ]
+}

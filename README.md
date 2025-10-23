@@ -1,0 +1,122 @@
+# Ladybug Blog
+
+Code for Ladybug's blog site, built with [Astro](https://astro.build/), Tailwind CSS, and TypeScript.
+The site is built on top of the [EV0](https://github.com/gndx/ev0-astro-theme) OSS theme.
+
+## 🚀 Getting Started
+
+Clone this repository to your local machine using Git.
+
+| Command           | Action                                             |
+| :---------------- | :------------------------------------------------- |
+| `npm install`     | Installs dependencies                              |
+| `npm start`       | Builds & runs local dev server at `localhost:4321` |
+| `npm run dev`     | Starts local dev server at `localhost:4321`        |
+| `npm run build`   | Build your production site to `./dist/`            |
+| `npm run preview` | Preview your build locally, before deploying       |
+| `npm run youtube` | Fetches the Latest YouTube Channel Videos          |
+
+* Edit the `.astro` files in the `src/pages` directory to add blog, category, tag and other information.
+* The blog layout can be modified from the `src/layouts` directory.
+* Global CSS is located in the `src/styles` directory.
+
+> [!NOTE]
+> For any URL-related changes such as custom slugs or internal navigation between pages, make
+> sure to run `npm run build` first, or simply run `npm start` to watch the local directory for such
+> changes and to build the site before preview.
+
+## 📝 Configuration Blog
+
+To configure the blog, edit the `src/config/config.json` file. This file contains the following options:
+
+```scheme
+{
+  "site": {
+    "title": "Blog - Ladybug",
+    "base_url": "blog.ladybugdb.com",
+    "base_path": "/",
+    "favicon": "/favicon.ico",
+    "logoLight": "/logoLight.png",
+    "logoDark": "/logoDark.png",
+    "lang": "en",
+    "description": "Ladybug is a highly scalable, extremely fast, easy-to-use embeddable graph database",
+    "pageSize": 6
+  },
+  "features": {
+    "youtube": false,
+    "dark_mode": true
+  },
+  "metadata": {
+    "meta_author": "Kùzu Inc.",
+    "meta_description": "Ladybug is a highly scalable, extremely fast, easy-to-use embeddable graph database"
+  },
+  "blog_description": {
+    "heading": "Welcome to the Ladybug blog",
+    "bio": "Ladybug is a highly scalable, extremely fast, easy-to-use embeddable graph database."
+  },
+}
+```
+
+The menu is configured in the `src/config/menu.json` file. This file contains the following options:
+
+```scheme
+[
+  {
+    "name": "Home",
+    "url": "/"
+  },
+  {
+    "name": "Tags",
+    "url": "/tags"
+  },
+  {
+    "name": "Categories",
+    "url": "/categories"
+  }
+]
+```
+
+Social networks are configured in the `src/config/social.json` file. This file contains the following options:
+
+```scheme
+{
+    name: "x",
+    url: "https://x.com/lbugdb",
+    svg: "...."
+}
+```
+
+## 📝 Adding New Posts
+
+* Add conventional markdown files (`.md`) to the `src/content/post` directory
+  * The file name should be in the format `YYYY-MM-DD-title.md` to retain the display order
+* Images can be added to the `/public/img/title` directory and referenced in the markdown files via relative paths
+  * For an image in `/public/img/title` directory, it can be referenced in the blog using the following path:
+  * `![](/img/title/image.png)`
+
+## 📂 Project Structure
+
+```
+/
+├── public/
+│   └── favicons/
+│   └── fonts/
+│   └── blog-placeholder.jpg
+│   └── favicon.png
+│   └── humans.txt
+├── scripts/
+│   └── youtube.cjs
+├── src/
+│   ├── components/
+│   ├── config/
+│   ├── content/
+│   ├── layouts/
+│   └── pages/
+│   └── styles/
+│   └── env.d.ts
+└── package.json
+└── astro.config.mjs
+└── tailwind.config.js
+└── tsconfig.json
+└── .gitignore
+```

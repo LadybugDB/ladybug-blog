@@ -1,0 +1,30 @@
+{
+  "site": {
+    "title": "Ladybug Blog",
+    "base_url": "https://blog.ladybugdb.com",
+    "base_path": "/",
+    "favicon": "/favicon.ico",
+    "logoLight": "/logoLight.png",
+    "logoDark": "/logoDark.png",
+    "lang": "en",
+    "description": "Ladybug is a highly scalable, extremely fast, easy-to-use embeddable graph database",
+    "pageSize": 6
+  },
+  "features": {
+    "youtube": false,
+    "dark_mode": true
+  },
+  "metadata": {
+    "meta_author": "Ladybug Inc.",
+    "meta_description": "Ladybug is a highly scalable, extremely fast, easy-to-use embeddable graph database"
+  },
+  "blog_description": {
+    "heading": "Blog",
+    "bio": "Ladybug is a highly scalable, extremely fast, embeddable property graph database management system."
+  },
+  "author": {
+    "name": "Ladybug Team",
+    "title": "Ladybug Team",
+    "avatar": "https://ladybugdb.com/img/blog/team.jpg"
+  }
+}
