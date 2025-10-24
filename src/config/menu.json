@@ -15,6 +15,11 @@
     {
       "name": "Categories",
       "url": "/categories"
+    },
+    {
+      "name": "Classic",
+      "url": "https://kuzudb.github.io/blog/",
+      "icon": "https://kuzudb.github.io/blog/og.png"
     }
   ]
 }
