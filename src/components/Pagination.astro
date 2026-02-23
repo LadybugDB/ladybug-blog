@@ -13,7 +13,7 @@ const paginationList = Array.from({ length }, (_, i) => i + 1);
         <li>
           <a
             href={prevUrl}
-            class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100  text-zinc-900 rtl:rotate-180 dark:text-white"
+            class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 text-gray-900 rtl:rotate-180 dark:text-white"
           >
             <span class="sr-only">Prev Page</span>
             <PrevIcon />
@@ -26,8 +26,8 @@ const paginationList = Array.from({ length }, (_, i) => i + 1);
         <li>
           <a
             href={`${firstUrl}${num == 1 ? '' : '' + num}`}
-            class={`block h-8 w-8 rounded border text-center leading-8 text-zinc-900 dark:text-white ${
-              currentPage == num ? 'border-orange-600 bg-orange-500 !text-white' : ''
+            class={`block h-8 w-8 rounded border text-center leading-8 text-gray-900 dark:text-white ${
+              currentPage == num ? 'border-red-600 bg-red-600 !text-white' : ''
             }`}
           >
             {num}
@@ -40,7 +40,7 @@ const paginationList = Array.from({ length }, (_, i) => i + 1);
         <li>
           <a
             href={nextUrl}
-            class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 text-zinc-900 rtl:rotate-180 dark:text-white"
+            class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 text-gray-900 rtl:rotate-180 dark:text-white"
           >
             <span class="sr-only">Next Page</span>
             <NextIcon />

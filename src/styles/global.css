@@ -18,21 +18,21 @@
   h4,
   h5,
   h6 {
-    @apply text-zinc-800 dark:text-zinc-200 !important;
+    @apply text-gray-800 dark:text-gray-200 !important;
   }
 
   p,
   li,
   strong {
-    @apply text-zinc-700 dark:text-zinc-200 !important;
+    @apply text-gray-700 dark:text-gray-300 !important;
   }
 
   i {
-    @apply text-zinc-700 dark:text-zinc-200 !important;
+    @apply text-gray-700 dark:text-gray-300 !important;
   }
 
   table * {
-    @apply text-zinc-800 dark:text-zinc-200;
+    @apply text-gray-800 dark:text-gray-200;
   }
 
   td {
@@ -40,11 +40,11 @@
   }
 
   th {
-    @apply p-1 bg-zinc-100 bg-zinc-200 dark:bg-zinc-300 text-zinc-800 dark:text-zinc-800 !important;
+    @apply p-1 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 !important;
   }
 
   kbd {
-    @apply bg-white text-zinc-700;
+    @apply bg-white text-gray-700;
   }
 
   mark {
@@ -52,7 +52,7 @@
   }
 
   a:hover {
-    @apply hover:text-orange-600;
+    @apply text-red-600 dark:text-red-400;
   }
 
   article img {
@@ -60,7 +60,7 @@
   }
 
   hr {
-    @apply h-0.5 border-solid bg-zinc-300 dark:bg-zinc-600;
+    @apply h-0.5 border-solid bg-gray-300 dark:bg-gray-700;
   }
 
   .prose table {
@@ -115,7 +115,7 @@ input#nav-toggle:checked~#nav-menu {
 }
 
 .sun {
-  @apply stroke-zinc-500 transition-all;
+  @apply stroke-gray-500 transition-all;
 }
 
 .moon {
@@ -127,11 +127,11 @@ input#nav-toggle:checked~#nav-menu {
 }
 
 .dark .moon {
-  @apply stroke-zinc-400;
+  @apply stroke-gray-400;
 }
 
 #themeToggle:hover .sun {
-  @apply stroke-zinc-800;
+  @apply stroke-red-600 dark:stroke-red-400;
 }
 
 #themeToggle:hover .moon {
@@ -143,7 +143,7 @@ input#nav-toggle:checked~#nav-menu {
 }
 
 .dark #themeToggle:hover .moon {
-  @apply stroke-zinc-200;
+  @apply stroke-red-400;
 }
 
 div.author-info__container:first-child {

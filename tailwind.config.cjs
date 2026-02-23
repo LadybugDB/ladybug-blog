@@ -5,6 +5,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {

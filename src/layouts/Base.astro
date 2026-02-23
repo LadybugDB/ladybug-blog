@@ -33,6 +33,10 @@ if (!finalTitle.includes("Ladybug")) {
   <head>
     <!-- favicon -->
     <link rel="shortcut icon" href={config.site.favicon} />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- theme meta -->
     <meta name="theme-name" content="bookworm-light-astro" />
     <meta name="msapplication-TileColor" content="#000000" />
@@ -95,7 +99,7 @@ if (!finalTitle.includes("Ladybug")) {
     />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
-  <body class="bg-white dark:bg-zinc-900/95">
+  <body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
   
     <Banner />
     <Header />

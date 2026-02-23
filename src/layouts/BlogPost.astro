@@ -26,7 +26,7 @@ const fullHeroImage = heroImage
   <article>
     <div class="md:col-10 mb-12">
       <h1 class="text-2xl font-bold md:text-4xl">{title}</h1>
-      <div class="text-text mt-4 flex flex-wrap text-zinc-800 dark:text-zinc-200">
+      <div class="text-text mt-4 flex flex-wrap text-gray-800 dark:text-gray-200">
         {
           authors?.map((author) => (
             <div class="author-info__container mx-3 mt-2 flex flex-wrap font-medium" style="margin-left: 0; margin-right: 1.2em;">
@@ -51,7 +51,7 @@ const fullHeroImage = heroImage
           ))
         }
       </div>
-      <div class="text-text mt-4 flex flex-wrap text-zinc-800 dark:text-zinc-200">
+      <div class="text-text mt-4 flex flex-wrap text-gray-800 dark:text-gray-200">
         <div class="mx-3 mt-2 flex flex-wrap items-center font-medium" style="margin-left: 0;">
           <CalendarIcon />
           <FormattedDate date={pubDate} />
@@ -76,7 +76,7 @@ const fullHeroImage = heroImage
         crossorigin="anonymous"
       />
     </head>
-    <div class="prose-md prose prose-orange min-w-full md:prose-lg lg:prose-xl">
+    <div class="prose-md prose prose-red dark:prose-invert min-w-full md:prose-lg lg:prose-xl">
       <slot />
     </div>
     <div class="mt-8">
@@ -84,7 +84,7 @@ const fullHeroImage = heroImage
         tags?.map((tag) => (
           <a
             href={`/tags/${slugify(tag)}`}
-            class="mb-2 mr-2 inline-block rounded-full bg-zinc-200 px-3 py-1 text-sm font-semibold capitalize text-zinc-700 dark:bg-zinc-900 dark:text-zinc-400"
+            class="mb-2 mr-2 inline-block rounded-full bg-gray-200 dark:bg-gray-800 px-3 py-1 text-sm font-semibold capitalize text-gray-700 dark:text-gray-300"
           >
             #{tag}
           </a>
