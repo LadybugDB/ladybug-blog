@@ -3,6 +3,7 @@ title: "LadybugDB v0.12.0 Release"
 description: "LadybugDB v0.12.0 Release"
 pubDate: "Nov 5 2025"
 categories: ["release"]
+heroImage: "../../../public/img/2025-11-05-release/release.png"
 authors: ["team"]
 tags: ["release"]
 ---

@@ -3,6 +3,7 @@ title: "Ladybug Speaks Bolt"
 description: "Ladybug Speaks Bolt"
 pubDate: "Nov 13 2025"
 categories: ["protocol"]
+heroImage: "../../../public/img/2025-11-13-bolt/speaks-bolt.png"
 authors: ["team"]
 tags: ["protocol"]
 ---
