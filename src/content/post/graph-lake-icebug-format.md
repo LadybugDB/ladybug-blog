@@ -110,6 +110,7 @@ Parquet handling also improved, with better relationship table scans and prefetc
 - **C API and Arrow improvements**: Arrow table registration, better relationship-table support, and broader embedding capabilities for tools and language bindings built on Ladybug.
 - **Correctness and reliability**: Significant work on joins, MERGE behavior, recursive scans, visibility checks, filters, relationship scans, Windows builds, packaging, and release automation. Less visible than new features, but the foundation everything else rests on.
 - **Notebooks**: The new [Ladybug Icebug notebooks](https://github.com/LadybugDB/ladybug-icebug-notebooks/blob/main/index.ipynb) repository provides hands-on Jupyter walkthroughs for learning the Icebug workflow end to end.
+- **Benchmarks**: We've seen noticable improvements in memory usage and runtime for python users due to improved memory management. Many types of count queries are now served from node group metadata instead of scanning rows.
 
 ---
 
