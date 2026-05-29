@@ -3,96 +3,130 @@ title: "LadybugDB v0.17.0 Release"
 description: "LadybugDB v0.17.0 brings graph analytics closer to the lakehouse with Icebug Format v1, better data source integration, leaner indexing, and richer visualization."
 pubDate: "May 28 2026"
 categories: ["release"]
+heroImage: "/img/2026-05-29-graph-lake/ladybug-graph-lake.png"
 authors: ["team"]
 tags: ["release", "lakehouse", "icebug"]
 ---
 
-LadybugDB v0.17.0 is a big step toward a graph-native lakehouse.
+Graph data rarely lives in isolation. It sits alongside Parquet files, relational databases, and object stores — embedded in the same analytical environments where the rest of your data already lives. Yet most graph systems demand you extract it, transform it, load it somewhere else, and manage the copies. That friction is the problem LadybugDB v0.17.0 is built to solve.
 
-LadybugDB is an open source project released under the MIT license, and contributions are welcome. Thank you to everyone who contributed code, testing, feedback, documentation, examples, and issue reports for this release.
+This release introduces [Icebug Format v1](https://github.com/Ladybug-Memory/icebug-format), deeper integration across the Arrow ecosystem, smarter SQL pushdown, and a set of targeted improvements that make graph analytics faster, leaner, and more at home inside modern data infrastructure.
 
-The theme of this release is simple: keep graph-shaped data close to where it already lives, avoid unnecessary copying, and make Ladybug and Icebug faster and easier to use across real-world storage systems. Graph analytics should not require a maze of exports, imports, and temporary copies before the useful work can begin.
+> **[Try it in the shell →](https://ladybugdb.github.io/wasm-shell/)** · **[Explore the notebooks →](https://github.com/LadybugDB/ladybug-icebug-notebooks/blob/main/index.ipynb)**
 
-## Graphs Meet The Lakehouse
+LadybugDB is open source under the MIT license. Thank you to everyone who contributed code, testing, feedback, documentation, examples, and issue reports for this release.
 
-This release lays the foundation for storing and analyzing graph data in a lakehouse-friendly way.
+---
 
-The centerpiece is [Icebug Format v1](https://github.com/Ladybug-Memory/icebug-format). Icebug is Ladybug's graph storage format for analytical workloads: durable, columnar, and designed around the shape of graph data. Instead of squeezing relationships and nodes through storage paths built for other kinds of data, Ladybug can now work with a format that treats graph structure as a first-class concern.
+## Icebug Format v1
 
-That matters because graph data is often already part of a larger analytical environment. It may live beside Parquet files, relational databases, object storage, or other data systems. Ladybug v0.17.0 moves us closer to running graph analytics where the data already is.
+The centerpiece of this release is [Icebug Format v1](https://github.com/Ladybug-Memory/icebug-format) — Ladybug's preferred scalable graph storage format for analytical workloads. We continue to support the more convenient single local file database as our native format.
 
-Storage upgrades are now handled in place. You no longer need to export and import databases just to move them forward to the new storage format. Once a database is upgraded, it cannot be opened by older Ladybug binaries, so upgrade production data with the same care you would use for any durable storage format change.
+Icebug is columnar, durable, and designed from the ground up around the shape of graph data. Rather than forcing nodes and relationships through storage paths built for tables or documents, Icebug treats graph structure as a first-class concern. That distinction matters: graph-shaped storage means graph-shaped access patterns, without translation overhead at every layer.
 
-## Better Pushdown Into SQL Engines
+Storage upgrades are now handled **in place**. You no longer need to export a database, import it elsewhere, and reconcile the difference just to move forward to a new format version. Upgrade in place, and keep working. Note that once a database is upgraded to a new version (41 for this release), it cannot be opened by older Ladybug binaries — treat it with the same care you'd apply to any durable storage migration.
 
-Ladybug is also getting better at letting other systems do the work they are already good at.
+---
 
-This release improves SQL pushdown into DuckDB, SQLite, and Postgres. In practice, that means Ladybug can push more filtering and query work down into the source system instead of pulling too much data across the boundary and sorting it out afterward.
+## Smarter SQL Pushdown
 
-For users, the result is a cleaner path from existing data to graph analytics. You can keep using the systems that already hold your data, while Ladybug focuses on the graph-shaped parts of the problem.
+Ladybug is getting better at letting other systems do what they're already good at.
 
-## More Data Sources Through ADBC
+This release improves SQL pushdown into **DuckDB, SQLite, and Postgres**. Instead of pulling data across the boundary and filtering it on Ladybug's side, Ladybug now pushes more of the filtering and selection work down into the source system — where the data lives, where the indexes are, and where that work is cheapest.
 
-Ladybug v0.17.0 adds beta support for ADBC, the Arrow Database Connectivity standard.
+The practical result: a cleaner path from existing relational data to graph analytics, with less unnecessary movement in between.
 
-ADBC gives Ladybug a broader, more standard way to connect to analytical data sources through the Arrow ecosystem. This is still early, but it is an important direction: more data sources, fewer one-off integrations, and a cleaner foundation for future connectors.
+---
 
-This also makes Ladybug more useful as a Cypher-based graph engine over Arrow memory. Applications that already produce Arrow tables can use Ladybug to interpret those tables as graph data and run Cypher over them without first committing everything to a separate graph database format.
+## Broader Connectivity via ADBC
+
+LadybugDB v0.17.0 adds **beta support for ADBC** (Arrow Database Connectivity), the emerging standard for connecting analytical systems through the Arrow ecosystem.
+
+ADBC replaces a growing list of one-off integrations with a single, standard interface. For Ladybug, that means more data sources become reachable without bespoke connectors — and it means applications that already produce Arrow tables can use Ladybug as a Cypher-based graph engine over that memory directly. No separate graph database format required; Arrow tables become graph data, and Cypher runs over them immediately.
+
+This is still early, but the direction is clear: fewer integration seams, more reachable data.
+
+---
 
 ## Leaner Indexing
 
-Indexing received a lot of practical attention in this release.
+Indexes received a lot of practical attention in this release, with a focus on giving users real control over the tradeoff between space and lookup speed.
 
-Ladybug can now disable the default hash index in cases where saving space matters more than fast primary-key lookup. That is especially useful for large analytical graphs, where indexes can take meaningful space and are not always needed for the workload.
+- **Disabling the default hash index** is now supported for workloads where space efficiency matters more than fast primary-key lookup — a meaningful option for large analytical graphs where index storage is a real cost.
+- **Optional ART indexing** (borrowed from DuckDB's approach) enables primary-key range scans in Ladybug for the first time. When fast, precise lookups are the priority, opt in. When they're not, opt out and keep the footprint lean.
 
-There is also optional support for using DuckDB's ART indexing approach for primary-key lookups. This makes index-based range scans possible in Ladybug, which was not the case before. The goal is flexibility: use less space when indexes are not needed, or opt into stronger lookup and range-scan behavior when they are.
+---
 
 ## Deeper Icebug Integration
 
-Icebug integration is much deeper in v0.17.0.
+The integration between Ladybug and Icebug is substantially deeper in v0.17.0.
 
-Ladybug can now read relationship tables into Icebug memory layouts and run analytics with zero-copy-style paths where possible. This reduces the overhead of moving data around before analysis can start.
+Ladybug can now read relationship tables directly into Icebug memory layouts and run analytics with zero-copy-style paths wherever possible. This eliminates a significant source of overhead: data no longer needs to be moved and re-shaped before analysis can begin.
 
-There was also important work around Arrow relationship tables, CSR layouts, relationship scans, row IDs, and Python exposure. The plain-English version: relationship data is becoming much more efficient to move through Ladybug, Icebug, and the broader Arrow ecosystem.
+Work on Arrow relationship tables, CSR layouts, relationship scans, and row IDs improved the efficiency of moving relationship data through Ladybug, Icebug, and the broader Arrow ecosystem. The Python layer now exposes these capabilities more directly, making the full path accessible from notebooks and scripts without low-level plumbing.
+
+---
 
 ## Bugscope Visualization
 
-[Bugscope](https://github.com/LadybugDB/bugscope) now fits more naturally into the Ladybug and Icebug stack.
+[Bugscope](https://github.com/LadybugDB/bugscope) now integrates directly into the Ladybug and Icebug stack.
 
-This release supports in-process analysis with Ladybug and Icebug, along with hierarchical clustering visualization. That makes graph structure easier to inspect, compare, and understand visually. Faster analytics are useful; being able to see the shape of the result makes them more useful.
+This release adds support for **in-process analysis** alongside **hierarchical clustering visualization**, making it practical to inspect, compare, and understand graph structure visually as part of the same analytical workflow — not as an afterthought that requires exporting to a separate tool.
+
+Fast analytics tell you what the answer is. Seeing the shape of the graph helps you understand *why*.
+
+---
 
 ## Python Improvements
 
-Python also moved forward in this release.
+Two meaningful improvements landed for Python users in this release.
 
-Query results now release memory when the result is closed, instead of waiting until the connection or database object is garbage collected. For long-running Python processes and larger analytical workflows, that makes memory behavior more predictable.
+**Memory release on result close.** Query results now release their memory when the result object is closed, rather than waiting for the connection or database to be garbage collected. For long-running processes and larger analytical workloads, this makes memory behavior predictable and controllable.
 
-This release also adds support for Python bindings built on top of Ladybug's C API. The existing pybind-based Python package remains the default today, but the C API path is important because it is the same foundation used by the other language backends. Over time, that gives Ladybug a more consistent cross-language base, and it may become the default Python path in the future.
+**C API-backed Python bindings.** This release adds Python bindings built on Ladybug's C API — the same foundation used by the other language backends. The existing pybind-based package remains the default, but the C API path establishes a more consistent cross-language base that may become the default in a future release.
 
-Higher-level language integrations can now use strongly typed schema declarations and declaratively translate them to Ladybug Cypher. That opens a path for application code to keep type-safe schema definitions in the host language while still targeting Ladybug's graph model. See this [Python example](https://github.com/adsharma/fquery/blob/main/examples/ladybug_demo.py) for one version of that workflow.
+Higher-level language integrations can now use **strongly typed schema declarations** that translate declaratively to Ladybug Cypher. Application code can keep type-safe schema definitions in the host language while targeting Ladybug's graph model underneath. See this [Python example](https://github.com/adsharma/fquery/blob/main/examples/ladybug_demo.py) for a concrete walkthrough.
 
-## Other Notable Work
+---
 
-Remote and object storage support improved, including virtual file system work, HTTP-style access paths, and Xet-backed storage. This strengthens the lakehouse story because real lakehouse data often lives outside the local filesystem.
+## Remote Storage and Hugging Face Datasets
 
-Hugging Face has become a key hub for open source datasets, and Ladybug now has support for accessing datasets through its Xet protocol. That makes it possible to work with published graph datasets directly from remote storage, including LadybugDB datasets on Hugging Face. For example:
+Real lakehouse data lives outside the local filesystem — in object storage, behind HTTP endpoints, and increasingly on Hugging Face. This release strengthens that story on several fronts.
 
-```sh
+Remote and object storage support improved with virtual file system work, HTTP-style access paths, and Xet-backed storage. Ladybug now supports **accessing Hugging Face datasets directly through the Xet protocol**, making it possible to work with published graph datasets from remote storage without a local download step:
+
+```
 lbug -i xet://datasets/ladybugdb/small-kgs/main/kg_history/icebug-disk/schema.cypher
 ```
 
-You can find more datasets at [huggingface.co/ladybugdb/datasets](https://huggingface.co/ladybugdb/datasets).
+Published datasets are available at [huggingface.co/ladybugdb/datasets](https://huggingface.co/ladybugdb/datasets).
 
-Parquet handling also improved, including relationship table scans and prefetching. These changes make larger analytical datasets faster and more practical to work with.
+Parquet handling also improved, with better relationship table scans and prefetching — making larger analytical datasets faster and more practical to work with at scale.
 
-The C API and Arrow paths gained new capabilities, including Arrow table registration and better relationship-table support. These are the kinds of lower-level improvements that make Ladybug easier to embed in other tools and language bindings.
+---
 
-Documentation and tutorial coverage also improved. The new [Ladybug Icebug notebooks](https://github.com/LadybugDB/ladybug-icebug-notebooks) repository provides Jupyter notebook based walkthroughs for learning the Icebug workflows hands-on.
+## Other Notable Work
 
-There was also a lot of correctness and reliability work around joins, MERGE behavior, recursive scans, visibility checks, filters, relationship scans, Windows builds, packaging, and release automation. These are less flashy than new features, but they are what make the bigger architectural work usable.
+- **C API and Arrow improvements**: Arrow table registration, better relationship-table support, and broader embedding capabilities for tools and language bindings built on Ladybug.
+- **Correctness and reliability**: Significant work on joins, MERGE behavior, recursive scans, visibility checks, filters, relationship scans, Windows builds, packaging, and release automation. Less visible than new features, but the foundation everything else rests on.
+- **Notebooks**: The new [Ladybug Icebug notebooks](https://github.com/LadybugDB/ladybug-icebug-notebooks/blob/main/index.ipynb) repository provides hands-on Jupyter walkthroughs for learning the Icebug workflow end to end.
 
-## The Short Version
+---
 
-LadybugDB v0.17.0 moves graph analytics closer to the lakehouse. It introduces [Icebug Format v1](https://github.com/Ladybug-Memory/icebug-format), adds in-place storage upgrades, improves pushdown into DuckDB, SQLite, and Postgres, adds beta ADBC support for broader data access, supports Cypher over Arrow memory, gives users more control over indexing and storage size, deepens the Icebug integration path, improves Python memory behavior, adds typed-schema-to-Cypher workflows, adds notebook-based Icebug tutorials, supports Hugging Face datasets through Xet, and makes graph structure easier to explore through [Bugscope](https://github.com/LadybugDB/bugscope) visualization.
+## Summary
 
-It is a release about less copying, better integration, and making graph analytics feel at home inside modern data systems.
+LadybugDB v0.17.0 is a release about **less copying, better integration, and making graph analytics feel at home inside modern data systems**.
+
+The key additions:
+
+- [Icebug Format v1](https://github.com/Ladybug-Memory/icebug-format) with in-place storage upgrades
+- Improved SQL pushdown into DuckDB, SQLite, and Postgres
+- Beta ADBC support for broader, standard data connectivity
+- Cypher over Arrow memory — no separate graph format required
+- Flexible indexing: disable the hash index to save space, or opt into ART-based range scans
+- Zero-copy-style relationship analytics via deeper Icebug integration
+- Predictable Python memory release; C API-backed bindings
+- Typed-schema-to-Cypher workflows for application code
+- Hugging Face dataset access via Xet
+- [Bugscope](https://github.com/LadybugDB/bugscope) visualization integrated into the analysis stack
+- [Notebook-based Icebug tutorials](https://github.com/LadybugDB/ladybug-icebug-notebooks/blob/main/index.ipynb)
