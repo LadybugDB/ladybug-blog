@@ -45,7 +45,7 @@ Indexing received a lot of practical attention in this release.
 
 Ladybug can now disable the default hash index in cases where saving space matters more than fast primary-key lookup. That is especially useful for large analytical graphs, where indexes can take meaningful space and are not always needed for the workload.
 
-There is also optional support for using DuckDB's ART indexing approach for primary-key lookups and range scans. The goal is flexibility: use less space when indexes are not needed, or opt into stronger lookup behavior when they are.
+There is also optional support for using DuckDB's ART indexing approach for primary-key lookups. This makes index-based range scans possible in Ladybug, which was not the case before. The goal is flexibility: use less space when indexes are not needed, or opt into stronger lookup and range-scan behavior when they are.
 
 ## Deeper Icebug Integration
 
