@@ -9,27 +9,27 @@ authors: ["team"]
 tags: ["release", "lakehouse", "graphlake"]
 ---
 
-This is more of a correctness, stability and performance improvement release. New features: Graph Lake and Improved support for SQL pushdown and external catalogs and Lakehouse table formats.
+This is more of a correctness, stability and performance improvement release. New features: GraphLake and improved support for SQL pushdown, external catalogs and lakehouse table formats.
 
 ### Storage, WAL, checkpoints, indexes
 
-A failed/partial checkpoint no longer leaves the disk in a corrupted state where it can't be recovered. Hash PK corruption is handled via runtime exception rather compile time `DASSERT` which is compiled out on release builds.
+A failed/partial checkpoint no longer leaves the disk in a corrupted state where it can't be recovered. Hash PK corruption is handled via a runtime exception rather than a compile-time `DASSERT`, which is compiled out in release builds.
 
 ### Correctness
 
 We now pass `TSAN` and `UBSAN`. While this doesn't prove that we don't have concurrency bugs, it improves the confidence in the quality of the code.
 
-Many improvements that fix problems where previous releases silently returned wrong results
+Many improvements fix problems where previous releases silently returned wrong results.
 
 ### Planner and optimizer
 
-Support for more query patterns that are now handled with optimized physical operators instead of materializing millions of rows. Net result: leadership position across LDBC SNB unofficial benchmarks: the 14 complex queries and 30 Prashanth Rao queries. Much improved results on LSQB as well.
+Support for more query patterns that are now handled with optimized physical operators instead of materializing millions of rows. Net result: a leadership position across unofficial LDBC SNB benchmarks: the 14 complex queries and 30 Prashanth Rao queries. Much improved results on LSQB as well.
 
 ### External Catalogs and SQL Pushdown
 
-We now support scanning a SQL catalog by convention. As long as the tables and columns are named a certain way, you can attach and start querying tables by simply attaching and using cypher. The queries are auto translated to SQL and executed efficiently by the underlying planner. More [query patterns](https://github.com/LadybugDB/extensions/blob/main/duckdb/test/test_files/sql_pushdown.test) including recursive CTEs are supported.
+We now support scanning a SQL catalog by convention. As long as the tables and columns are named a certain way, you can start querying tables by simply attaching and using Cypher. The queries are auto-translated to SQL and executed efficiently by the underlying planner. More [query patterns](https://github.com/LadybugDB/extensions/blob/main/duckdb/test/test_files/sql_pushdown.test) including recursive CTEs are supported.
 
-When you do `export database '/path/to/backup`, we now use the icedisk format for export. This format can be queried via a [duckdb extension](https://github.com/Ladybug-Memory/duckdb-icedisk-extension) or the exported data can be moved to object storage and queried remotely using `hf://..` or `xet://...` URLs.
+When you do `export database '/path/to/backup'`, we now use the icedisk format for export. This format can be queried via a [duckdb extension](https://github.com/Ladybug-Memory/duckdb-icedisk-extension) or the exported data can be moved to object storage and queried remotely using `hf://..` or `xet://...` URLs.
 
 We are inspired by the idea of using the catalog of a SQL or Cypher database instead of JSON files on object storage. This is the basis of GraphLake (Iceberg tables + Icebug-Disk). It's only fitting to add support for DuckLake via a new [ducklake extension module](https://github.com/LadybugDB/extensions/blob/main/ducklake/test/test_files/ducklake.test).
 
@@ -42,7 +42,7 @@ Improved documentation on how to use Ladybug with Iceberg tables and on vendor c
 
 ### Postgres Integration
 
-Postgres is everyone's favorite OLTP database. The Postgres core team has [chosen](https://gdb-engines.com/blog/graph-technology-august-round-up/) to defer the implementation of PGQ (a graph query language) to the next release, which is likely a year away. In the meanwhile, you can continue to use the `pg_ladybug` [extension](https://github.com/LadybugDB/pg_ladybug).
+Postgres is everyone's favorite OLTP database. The Postgres core team has [chosen](https://gdb-engines.com/blog/graph-technology-august-round-up/) to defer the implementation of PGQ (a graph query language) to the next release, which is likely a year away. In the meantime, you can continue to use the `pg_ladybug` [extension](https://github.com/LadybugDB/pg_ladybug).
 
 The pg_ladybug approach is similar to `pg_duckdb` in that it brings in columnar storage which is much faster than running PGQ over heap storage. Unlike `pg_duckdb`, `pg_ladybug` also supports local NVMe storage in addition to object storage.
 
