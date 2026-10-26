@@ -24,36 +24,36 @@ We also hope to turn on @aikins01's previous work on concurrent writes in the ne
 
 ## Better Plans
 
-If you read the Kuzu VLDB 2025 paper, a few query plans around Hash Joins, Factorized Joins and ASP-Joins that were discussed. These were all novel algorithms that improved the state of the art. But applying those plans to simple queries such as the ones in Prashanth Rao's [benchmark](https://github.com/hyperdimensionalcomputingai/graph-benchmark-ldbc) was a mistake.
+If you read the Kuzu VLDB 2025 paper, a few query plans around Hash Joins, Factorized Joins and ASP-Joins were discussed. These were all novel algorithms that improved the state of the art. But applying those plans to simple queries such as the ones in Prashanth Rao's [benchmark](https://github.com/hyperdimensionalcomputingai/graph-benchmark-ldbc) was a mistake.
 
-We noticed that some of the competing databases were doing INLJ (index nested loop joins), which is essentially two for loops to perform a join. So we added lookup-joins (a variant of INLJ) to our repertoire.
+We noticed that some of the competing databases were doing INLJ (Index Nested Loop Joins), which is essentially two for loops to perform a join. So we added lookup joins (a variant of INLJ) to our repertoire.
 
 Also, even simple queries like `RETURN 1` had a constant overhead that woke up all the threads on a multi-core machine. We optimized many of them away, so the minimum query latency is much lower than previous releases.
 
-While there are opportunities to further reduce this, our goal is not to compete with memcache/KV like systems on latency. Goal is to have < 3ms latency for easy queries and really focus on hard queries where people choose us.
+While there are opportunities to further reduce this, our goal is not to compete with memcache/KV-like systems on latency. Our goal is to have < 3ms latency for easy queries and really focus on hard queries where people choose us.
 
 ## Snowflake and Databricks
 
-Previously we would talk to these catalogs through duckdb's iceberg/unity catalog support. But we found that it was easier to use ADBC drivers using columnar.tech's dbc driver manager.
+Previously we would talk to these catalogs through DuckDB's Iceberg/Unity Catalog support. But we found that it was easier to use ADBC drivers with columnar.tech's DBC driver manager.
 
-Both of these lake houses will be supported in this release and available on the respective marketplaces for a supported version.
+Both of these lakehouses will be supported in this release and available on the respective marketplaces as a supported version.
 
 ## DuckDB 2.0.0
 
-DuckDB made a major release just 5 days ago with improve asyncio, variant support and many query engine optimizations.
+DuckDB made a major release just 5 days ago with improved asyncio, variant support and many query engine optimizations.
 
-If you're a duckdb user and want to query the tables via ladybug cypher, it should work as well as any other graph query to SQL translator.
+If you're a DuckDB user and want to query the tables via Ladybug Cypher, it should work as well as any other graph-query-to-SQL translator.
 
 ## SQLite Replication
 
-We now link a copy of sqlite directly into the extension instead of reusing duckdb's sqlite extension. As a second feature, it's possible to setup replication from sqlite row oriented tables to ladybug columnar tables.
+We now link a copy of SQLite directly into the extension instead of reusing DuckDB's SQLite extension. As a second feature, it's possible to set up replication from SQLite row-oriented tables to Ladybug columnar tables.
 
-We envision coding agents that use sqlite such as pidotdev to use ladybug's columnar storage for historical storage due to efficiency and context/knowledge graph support.
+We envision coding agents that use SQLite such as [pidotdev](https://pi.dev) to use Ladybug's columnar storage for historical storage due to efficiency and context/knowledge graph support.
 
 ## Bugscope 0.22.0
 
 Bugscope has been updated as well. You can now use a combination of CLI and GUI to query graphs as large as 90 million nodes, 750 million edges.
 
-You can also query remote ladybug instances over ADBC.
+You can also query remote Ladybug instances over ADBC.
 
-Once again, thank you for being a part of the ladybug community and contributing to its growth. Happy Halloween!
+Once again, thank you for being a part of the Ladybug community and contributing to its growth. Happy Halloween!
