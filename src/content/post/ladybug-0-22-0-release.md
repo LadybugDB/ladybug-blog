@@ -12,8 +12,6 @@ The 0.22.0 release is arriving a few days early. It's one of the biggest monthly
 
 ![Commits over time](/img/2026-10-26-halloween/commits-over-time.png)
 
-![LadybugDB v0.22.0 Halloween Release](/img/2026-10-26-halloween/ladybug-halloween.png)
-
 ## Data Integrity
 
 The largest area that received attention was around CHECKPOINT operations. One of the most basic things a database does is to not lose data. It makes a promise that the data was received at COMMIT. But only the WAL record is written to disk. Data is still buffered in RAM until we do a CHECKPOINT.
@@ -52,7 +50,7 @@ We envision coding agents that use SQLite such as [pidotdev](https://pi.dev) to 
 
 ## Bugscope 0.22.0
 
-Bugscope has been updated as well. You can now use a combination of CLI and GUI to query graphs as large as 90 million nodes, 750 million edges.
+[Bugscope](https://github.com/LadybugDB/bugscope) has been updated as well. You can now use a combination of CLI and GUI to query graphs as large as 90 million nodes, 750 million edges.
 
 You can also query remote Ladybug instances over ADBC.
 
