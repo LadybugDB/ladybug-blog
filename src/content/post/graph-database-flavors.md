@@ -31,7 +31,7 @@ This is a heavily contested recent use case. It's very clear that a server side 
 
 A number of agent memory companies pursue a dual product strategy. They build an open source version that gets many github stars, launch #1 on product hunt and flood the social media with tech influencer buzz.
 
-Then there is a second cloud based "enterprise version" that uses a server side commercial database with some of the more desirable architecture. The risk with this setup is that OSS version is a bait and the company's business interest is in keeping its feature set limited so the enterprise version sells.
+They then offer a second, cloud-based "enterprise version" backed by a server-side commercial database with the more desirable architecture. The risk with this setup is that OSS version is a bait and the company's business interest is in keeping its feature set limited so the enterprise version sells.
 
 ## LadybugDB Market Position
 
