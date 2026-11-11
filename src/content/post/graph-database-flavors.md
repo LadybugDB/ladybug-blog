@@ -35,7 +35,7 @@ They then offer a second, cloud-based "enterprise version" backed by a server-si
 
 ## LadybugDB Market Position
 
-Some of the larger players such as Neo4j dabbling with agent context is a validation of the market demand. Here's why you should consider Ladybug instead:
+Some of the larger players such as Neo4j dabbling with agent context is a validation of the market demand for embedded graph databases. Here's why you should consider Ladybug instead:
 
 * Ease of use: closer to networkx vs hiring a DBA to setup Oracle. Achieved via embedded architecture.
 * Semantically rich: Well understood MVCC based Transaction. Hope to run a more rigorous test such as Jepsen. For now, we pass the MVCC bank test (one of the Jepsen components)
